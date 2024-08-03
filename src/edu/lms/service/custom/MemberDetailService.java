@@ -4,6 +4,7 @@
  */
 package edu.lms.service.custom;
 
+import edu.lms.dto.MemberDto;
 import edu.lms.entity.BorrowDetailsWrapper;
 import edu.lms.service.SuperService;
 /**
@@ -13,6 +14,8 @@ import edu.lms.service.SuperService;
 public interface MemberDetailService extends SuperService {
 
     BorrowDetailsWrapper getBorrowDetails(String borrowId) throws Exception;
+
+    public MemberDto get(String userId)throws Exception;
 
    
     
