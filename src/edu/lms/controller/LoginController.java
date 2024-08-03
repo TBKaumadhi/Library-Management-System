@@ -5,6 +5,7 @@
 package edu.lms.controller;
 
 
+import edu.lms.dto.RegisterDto;
 import edu.lms.service.ServiceFactory;
 import edu.lms.service.custom.LoginService;
 
@@ -15,8 +16,16 @@ import edu.lms.service.custom.LoginService;
 public class LoginController {
     private LoginService loginService = (LoginService)ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.LOGIN);
     
-    public String get (String userName, String password) throws Exception{
+    public RegisterDto get (String userName, String password) throws Exception{
         return loginService.get(userName,password);
+    }
+    
+     public String update(RegisterDto dto) throws Exception {
+        return loginService.update(dto);
+    }
+
+    public RegisterDto get(String userId) throws Exception {
+        return loginService.get(userId);
     }
 }
 
