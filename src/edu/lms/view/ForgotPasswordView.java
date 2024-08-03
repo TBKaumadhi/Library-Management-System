@@ -8,7 +8,6 @@ import edu.lms.controller.ResetController;
 import edu.lms.dto.RegisterDto;
 
 import javax.swing.JOptionPane;
-
 /**
  *
  * @author USER
