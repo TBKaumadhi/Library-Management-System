@@ -4,7 +4,6 @@
  */
 package edu.lms.view;
 
-import edu.lms.view.MemberDetailsView;
 /**
  *
  * @author USER
@@ -15,7 +14,7 @@ public class MemberDashboard extends javax.swing.JFrame {
      * Creates new form MembersDashboard
      */
     public MemberDashboard() {
-        super("Student Dashboard");
+        super("Member Dashboard");
         initComponents();
     }
 
@@ -104,7 +103,7 @@ public class MemberDashboard extends javax.swing.JFrame {
     private void btnMemberinfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMemberinfoActionPerformed
         // TODO add your handling code here:
         setVisible(true);
-        //new LoginDetails().setVisible(true);
+        new LoginDetailsView().setVisible(true);
        
     }//GEN-LAST:event_btnMemberinfoActionPerformed
 
