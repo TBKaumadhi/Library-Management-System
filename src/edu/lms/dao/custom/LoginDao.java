@@ -3,17 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package edu.lms.dao.custom;
-
-import edu.lms.dao.CrudDao;
-import edu.lms.entity.RegisterEntity;
-
+import edu.lms.dao.AuthenticateDao;
 /**
  *
  * @author USER
  */
-public interface LoginDao extends CrudDao <RegisterEntity, String>{
+public interface LoginDao extends AuthenticateDao <String, String>{
 
-    public RegisterEntity get(String userName, String password) throws Exception;
+    public String get(String userName, String password) throws Exception;
     
-   
+  
 }
