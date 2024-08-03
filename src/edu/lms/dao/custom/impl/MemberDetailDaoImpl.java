@@ -9,6 +9,7 @@ import edu.lms.dao.custom.MemberDetailDao;
 import edu.lms.entity.BorrowDetailEntity;
 import edu.lms.entity.BorrowDetailsWrapper;
 import edu.lms.entity.BorrowEntity;
+import edu.lms.entity.MemberEntity;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -41,31 +42,37 @@ public class MemberDetailDaoImpl implements MemberDetailDao{
     
     return new BorrowDetailsWrapper(borrowEntity, details);
     }
-    
 
     @Override
-    public BorrowDetailsWrapper get(Object id) throws Exception {
+    public MemberEntity get(String userId) throws Exception {
+        ResultSet rst =CrudUtil.executeQuery("SELECT memberId FROM Members WHERE userId=?", userId);
+        if(rst.next()){
+            MemberEntity entity= new MemberEntity();
+            entity.setMemberId(rst.getString("memberId"));
+            
+            return entity;
+        }
         return null;
     }
 
     @Override
-    public boolean create(BorrowDetailsWrapper entity) throws Exception {
+    public boolean create(Object entity) throws Exception {
         return false;
     }
 
     @Override
-    public boolean update(BorrowDetailsWrapper entity) throws Exception {
+    public boolean update(Object entity) throws Exception {
         return false;
     }
 
     @Override
-    public boolean delete(Object id) throws Exception {
+    public boolean delete(String id) throws Exception {
         return false;
     }
 
     @Override
-    public ArrayList<BorrowDetailsWrapper> getAll() throws Exception {
-       return null;
+    public ArrayList<Object> getAll() throws Exception {
+        return null;
     }
     
 }
