@@ -6,7 +6,7 @@ package edu.lms.view;
 
 import edu.lms.controller.LoginController;
 import edu.lms.dto.RegisterDto;
-import edu.lms.dto.UserDto;
+
 import edu.lms.session.UserSession;
 
 import javax.swing.JOptionPane;
