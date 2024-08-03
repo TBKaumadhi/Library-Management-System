@@ -9,7 +9,8 @@ import edu.lms.dao.custom.MemberDetailDao;
 import edu.lms.service.custom.MemberDetailService;
 import edu.lms.dao.DaoFactory;
 import edu.lms.entity.BorrowDetailsWrapper;
-
+import edu.lms.entity.MemberEntity;
+import edu.lms.dto.MemberDto;
 
 /**
  *
@@ -23,6 +24,18 @@ public class MemberDetailServiceImpl implements MemberDetailService{
     public BorrowDetailsWrapper getBorrowDetails(String id) throws Exception {
         return memberDetailDao.getDetails(id);
     }
+
+    @Override
+    public MemberDto get(String userId) throws Exception{
+        
+        MemberEntity entity= memberDetailDao.get(userId);
+            if(entity!=null){
+                MemberDto dto= new MemberDto();
+                dto.setMemberId(entity.getMemberId());
+                return dto;
+            }
+            return null;
+    } 
 
     
             
