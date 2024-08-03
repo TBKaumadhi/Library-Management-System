@@ -22,7 +22,7 @@ public class LoginServiceImpl implements LoginService{
         if(entity != null){
             return getDto(entity);
     }  return null;              
-    } 
+} 
 
     @Override
     public String update(RegisterDto registerDto) throws Exception {
@@ -47,5 +47,5 @@ public class LoginServiceImpl implements LoginService{
          return new RegisterDto(entity.getUserId(),entity.getUserName(),entity.getPassword(),entity.getEmail(),
                  entity.getRole(),entity.getSecQuestion(),entity.getAnswer());
      }
-    }
+}
 
