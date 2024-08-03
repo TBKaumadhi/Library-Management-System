@@ -5,13 +5,14 @@
 package edu.lms.dao.custom;
 
 import edu.lms.dao.CrudDao;
-import edu.lms.entity.UserEntity;
+import edu.lms.entity.RegisterEntity;
+
 
 /**
  *
  * @author USER
  */
-public interface ResetDao extends CrudDao<UserEntity,String>{
+public interface ResetDao extends CrudDao<RegisterEntity,String>{
     
     
 }
