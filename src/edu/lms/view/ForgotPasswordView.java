@@ -5,8 +5,8 @@
 package edu.lms.view;
 
 import edu.lms.controller.ResetController;
-import edu.lms.dto.UserDto;
-import edu.lms.entity.UserEntity;
+import edu.lms.dto.RegisterDto;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -47,6 +47,7 @@ public class ForgotPasswordView extends javax.swing.JFrame {
         txtConfirmPassword = new javax.swing.JPasswordField();
         btnPasswordReset = new javax.swing.JButton();
         btnAnswerVerify = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,6 +111,13 @@ public class ForgotPasswordView extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Go To Login");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -142,7 +150,9 @@ public class ForgotPasswordView extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnPasswordReset, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52))
+                .addGap(26, 26, 26)
+                .addComponent(jButton1)
+                .addGap(24, 24, 24))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,9 +183,11 @@ public class ForgotPasswordView extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEnterConfirmPass, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
-                .addComponent(btnPasswordReset)
-                .addGap(35, 35, 35))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnPasswordReset)
+                    .addComponent(jButton1))
+                .addGap(29, 29, 29))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -213,8 +225,7 @@ public class ForgotPasswordView extends javax.swing.JFrame {
     private void btnPasswordResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPasswordResetActionPerformed
         // TODO add your handling code here:
         resetPassword();
-        setVisible(false);
-        new LoginView().setVisible(true);
+       
     }//GEN-LAST:event_btnPasswordResetActionPerformed
 
     private void txtNewPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNewPasswordActionPerformed
@@ -231,6 +242,12 @@ public class ForgotPasswordView extends javax.swing.JFrame {
         // TODO add your handling code here:
         verifyAnswer();
     }//GEN-LAST:event_btnAnswerVerifyActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+         setVisible(false);
+        new LoginView().setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -272,6 +289,7 @@ public class ForgotPasswordView extends javax.swing.JFrame {
     private javax.swing.JButton btnAnswerVerify;
     private javax.swing.JButton btnGenerateSecQ;
     private javax.swing.JButton btnPasswordReset;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblEnterAnswer;
     private javax.swing.JLabel lblEnterConfirmPass;
@@ -285,15 +303,13 @@ public class ForgotPasswordView extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtNewPassword;
     // End of variables declaration//GEN-END:variables
     
-    //private void customInitialize(){
-      //  txtNewPassword.setEditable(false);
-      // }
+    
     private void generateSecQuestion(){
         try{
            String userName = txtEnterUserName.getText();
-             UserDto userDto = resetController.get(userName);
-             if(userDto!= null){
-                  txtGeneratedSecQ.setText(userDto.getSecQ());                 
+             RegisterDto dto = resetController.get(userName);
+             if(dto!= null){
+                  txtGeneratedSecQ.setText(dto.getSecQuestion());                 
              }
             }catch(Exception e){
             e.printStackTrace();
@@ -302,8 +318,8 @@ public class ForgotPasswordView extends javax.swing.JFrame {
     }   
     private void verifyAnswer(){
     try {
-        UserDto userDto = resetController.get(txtEnterUserName.getText());// man methanata kalin damme txtAnswer.getText eka eth where username= kiyala hoyana nisa hariyan na
-        if (! txtEnterAnswer.getText().equals(userDto.getAnswer())) {
+        RegisterDto dto = resetController.get(txtEnterUserName.getText());
+        if (! txtEnterAnswer.getText().equals(dto.getAnswer())) {
             JOptionPane.showMessageDialog(this, "Answer doesn't match your credentials");
             return;
         }
@@ -320,10 +336,12 @@ public class ForgotPasswordView extends javax.swing.JFrame {
                   
                    JOptionPane.showMessageDialog(this,"Entered password doesn't match with the confirmed"); 
               }
-                 UserDto dto = new UserDto(txtEnterUserName.getText(),txtGeneratedSecQ.getText(),txtEnterAnswer.getText(),new String(txtNewPassword.getPassword()));
+                 RegisterDto dto = new RegisterDto();
+                 
+                 dto.setPassword(new String(txtNewPassword.getPassword()));
+                 dto.setUserName(txtEnterUserName.getText());
                  String resp = resetController.update(dto);
-                 JOptionPane.showMessageDialog(this, resp);
-            
+                 JOptionPane.showMessageDialog(this, resp);            
                                          
              
         }catch(Exception e){
