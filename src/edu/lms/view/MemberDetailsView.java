@@ -4,12 +4,16 @@
  */
 package edu.lms.view;
 
+import edu.lms.controller.LoginController;
 import edu.lms.controller.MemberDetailViewController;
-
+import edu.lms.dto.MemberDto;
 import edu.lms.entity.BorrowDetailEntity;
 import edu.lms.entity.BorrowDetailsWrapper;
 import edu.lms.entity.BorrowEntity;
+import edu.lms.session.UserSession;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,14 +23,17 @@ import javax.swing.table.DefaultTableModel;
  */
 public class MemberDetailsView extends javax.swing.JFrame {
     private MemberDetailViewController memberDetailViewController ;
+    
     /**
      * Creates new form MemberDetailsView
      */
     public MemberDetailsView() {
         memberDetailViewController = new MemberDetailViewController();
+       
         initComponents();
         loadTable();
         loadTableReturns();
+        generateMemberId();
     }
 
     /**
@@ -48,8 +55,11 @@ public class MemberDetailsView extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setToolTipText("");
 
         tblBorrowings.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -88,14 +98,14 @@ public class MemberDetailsView extends javax.swing.JFrame {
         tblReturnDetails.setSelectionBackground(new java.awt.Color(102, 102, 255));
         jScrollPane2.setViewportView(tblReturnDetails);
 
-        jLabel1.setText("Enter MemberId : ");
-
         btnSearch.setText("Search");
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSearchActionPerformed(evt);
             }
         });
+
+        jLabel3.setText("Your MemberId is:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -113,10 +123,14 @@ public class MemberDetailsView extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 747, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(63, 63, 63)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnSearch)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -127,14 +141,15 @@ public class MemberDetailsView extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSearch))
-                .addGap(8, 8, 8)
+                    .addComponent(btnSearch)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36)
                 .addComponent(lblBorrowedBooks, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -151,7 +166,7 @@ public class MemberDetailsView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 8, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -203,6 +218,7 @@ public class MemberDetailsView extends javax.swing.JFrame {
     private javax.swing.JButton btnSearch;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -214,7 +230,7 @@ public class MemberDetailsView extends javax.swing.JFrame {
 
     private void loadTable(){
         
-            String column [] ={"Id","Member Id", "BorrowDate", "Due Date"}; 
+            String column [] ={"Id", "BorrowDate", "Due Date"}; 
             DefaultTableModel dtm = new DefaultTableModel(column,0){
                 @Override
                 public boolean isCellEditable(int row,int column){
@@ -245,7 +261,7 @@ public class MemberDetailsView extends javax.swing.JFrame {
 
              for (BorrowDetailEntity detail : details) {
                  if(detail.getReturnDate() == null){
-                    Object data[]={detail.getBorrowId(),borrowEntity.getMemberId(),borrowEntity.getBorrowDate(),borrowEntity.getDueDate()};
+                    Object data[]={detail.getBorrowId(),borrowEntity.getBorrowDate(),borrowEntity.getDueDate()};
         
                    DefaultTableModel dtm= ( DefaultTableModel)tblBorrowings.getModel();
                 dtm.addRow(data);
@@ -277,5 +293,17 @@ public class MemberDetailsView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error loading books");
           } 
     }
-
+    private void generateMemberId(){
+        String userId= UserSession.getInstance().getUserId();        //get the userId from login view
+        try {   
+            MemberDto dto= memberDetailViewController.get(userId);
+            if( dto!= null){
+               txtId.setText(dto.getMemberId());
+               txtId.setEditable(false);              // so the viewer can only see their details
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(MemberDetailsView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
 }
