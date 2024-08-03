@@ -23,8 +23,7 @@ public class LoginView extends javax.swing.JFrame {
     public LoginView() {
         
         initComponents();
-        loginController = new LoginController();
-       
+        loginController = new LoginController();       
     }
 
     /**
