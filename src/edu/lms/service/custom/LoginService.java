@@ -4,6 +4,7 @@
  */
 package edu.lms.service.custom;
 
+import edu.lms.dto.RegisterDto;
 import edu.lms.service.SuperService;
 /**
  *
@@ -11,6 +12,9 @@ import edu.lms.service.SuperService;
  */
 public interface LoginService extends SuperService {
 
-    public String get(String userName, String password) throws Exception;
+    public RegisterDto get(String userName, String password) throws Exception;
     
+    public String update (RegisterDto registerDto) throws Exception;
+
+    public RegisterDto get(String userId)throws Exception;
 }
