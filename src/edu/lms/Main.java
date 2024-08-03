@@ -4,9 +4,6 @@
  */
 package edu.lms;
 import edu.lms.view.LoginView;
-import edu.lms.view.MemberDetailsView;
-
-
 /**
  *
  * @author USER
