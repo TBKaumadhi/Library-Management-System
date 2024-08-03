@@ -5,6 +5,7 @@
 package edu.lms.controller;
 
 
+import edu.lms.dto.MemberDto;
 import edu.lms.entity.BorrowDetailsWrapper;
 import edu.lms.service.ServiceFactory;
 import edu.lms.service.custom.MemberDetailService;
@@ -23,4 +24,7 @@ public class MemberDetailViewController {
     public BorrowDetailsWrapper getBorrowDetails(String id) throws Exception {
          return memberService.getBorrowDetails(id);
     }
+    public MemberDto get(String userId) throws Exception{
+         return memberService.get (userId);
+    } 
 }
