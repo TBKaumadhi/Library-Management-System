@@ -20,7 +20,7 @@ public class ForgotPasswordView extends javax.swing.JFrame {
     public ForgotPasswordView() {
         resetController=new ResetController();
         initComponents();
-       // customInitialize();
+       
     }
 
     /**
