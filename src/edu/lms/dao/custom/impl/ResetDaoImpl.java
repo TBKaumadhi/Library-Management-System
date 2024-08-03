@@ -6,7 +6,7 @@ package edu.lms.dao.custom.impl;
 
 import edu.lms.dao.CrudUtil;
 import edu.lms.dao.custom.ResetDao;
-import edu.lms.entity.UserEntity;
+import edu.lms.entity.RegisterEntity;
 import java.util.ArrayList;
 import java.sql.ResultSet;
 
@@ -17,14 +17,14 @@ import java.sql.ResultSet;
 public class ResetDaoImpl implements ResetDao{
 
     @Override
-    public boolean create(UserEntity t) throws Exception {
+    public boolean create(RegisterEntity t) throws Exception {
         return false; 
     }
 
     @Override
-    public boolean update(UserEntity t) throws Exception {
+    public boolean update(RegisterEntity t) throws Exception {
         
-        return  CrudUtil.executeUpdate("UPDATE Users SET password=?, secQuestion=?,answer=? WHERE username=?", t.getPassword(),t.getSecQ(),t.getAnswer(),t.getUserName());     
+        return  CrudUtil.executeUpdate("UPDATE Users SET password=? WHERE username=?", t.getPassword(),t.getUserName());     
     }
 
     @Override
@@ -33,16 +33,21 @@ public class ResetDaoImpl implements ResetDao{
     }
 
     @Override
-    public UserEntity get(String userName) throws Exception {
+    public RegisterEntity get(String userName) throws Exception {
         ResultSet rst= CrudUtil.executeQuery("SELECT username,secQuestion,answer,password from Users WHERE username=? ", userName); 
         if(rst.next()){
-            UserEntity userEntity = new UserEntity (rst.getString("userName"),rst.getString("secQuestion"), rst.getString("answer"),rst.getString("password"));
-            return userEntity;
+            RegisterEntity entity = new RegisterEntity();
+            entity.setAnswer(rst.getString("answer"));
+            entity.setSecQuestion(rst.getString("secQuestion"));
+            entity.setPassword(rst.getString("password"));
+            entity.setUserName(rst.getString("userName"));
+           
+            return entity;
         } return null;
     }
 
     @Override
-    public ArrayList<UserEntity> getAll() throws Exception {
+    public ArrayList<RegisterEntity> getAll() throws Exception {
        return null;
     }
     
