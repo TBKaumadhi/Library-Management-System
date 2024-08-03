@@ -4,7 +4,7 @@
  */
 package edu.lms.service.custom;
 
-import edu.lms.dto.UserDto;
+import edu.lms.dto.RegisterDto;
 import edu.lms.service.SuperService;
 
 /**
@@ -12,9 +12,7 @@ import edu.lms.service.SuperService;
  * @author USER
  */
 public interface ResetService extends SuperService{
-
-     // String update(String password) throws Exception;
-      
-      String update (UserDto userDto) throws Exception;
-      UserDto get(String userName) throws Exception; ;
+     
+      String update (RegisterDto registerDto) throws Exception;
+      RegisterDto get(String userName) throws Exception; 
 }
