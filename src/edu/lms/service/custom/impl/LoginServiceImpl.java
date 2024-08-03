@@ -6,8 +6,6 @@ package edu.lms.service.custom.impl;
 import edu.lms.dao.DaoFactory;
 import edu.lms.dao.custom.LoginDao;
 import edu.lms.dto.RegisterDto;
-
-import edu.lms.dto.UserDto;
 import edu.lms.entity.RegisterEntity;
 import edu.lms.service.custom.LoginService;
 /**
