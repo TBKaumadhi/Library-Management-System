@@ -4,7 +4,6 @@
  */
 package edu.lms.view;
 
-import edu.lms.controller.LoginController;
 import edu.lms.controller.MemberDetailViewController;
 import edu.lms.dto.MemberDto;
 import edu.lms.entity.BorrowDetailEntity;
@@ -303,7 +302,6 @@ public class MemberDetailsView extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             Logger.getLogger(MemberDetailsView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }        
     }
 }
