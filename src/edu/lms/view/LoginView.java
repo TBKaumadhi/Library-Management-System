@@ -5,7 +5,9 @@
 package edu.lms.view;
 
 import edu.lms.controller.LoginController;
+import edu.lms.dto.RegisterDto;
 import edu.lms.dto.UserDto;
+import edu.lms.session.UserSession;
 
 import javax.swing.JOptionPane;
 
@@ -239,24 +241,25 @@ public class LoginView extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
    private void loginUser() {
-    try {
-                 
-        String role = loginController.get(txtUserName.getText(),new String(txtPassword.getPassword()));
-
-        if (role != null) {
-            if ("Staff".equals(role)) {
+    try {       
+         
+          RegisterDto dto= loginController.get(txtUserName.getText(),new String(txtPassword.getPassword()));
+          
+        if (dto != null) {
+            if ("Staff".equals(dto.getRole())) {
                 new StaffDashboard().setVisible(true);
-            } else if ("Member".equals(role)) {
+            } else if ("Member".equals(dto.getRole())) {
                 new MemberDashboard().setVisible(true);
             }
-            
+             
+            UserSession.getInstance().setUserId(dto.getUserId());   
             setVisible(false);
-        } else {
+        }else {
             JOptionPane.showMessageDialog(this, "Invalid username or password");
         }
-    } catch (Exception e) {
+     }catch (Exception e) {
         JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-        e.printStackTrace();  // Optionally print stack trace for debugging
+        e.printStackTrace();  
     }
    }
 }
