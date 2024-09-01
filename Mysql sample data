@@ -1,0 +1,91 @@
+DROP DATABASE IF EXISTS Library;
+CREATE DATABASE Library;
+USE Library;
+
+CREATE TABLE Users(
+	userId VARCHAR(6) NOT NULL,
+	username VARCHAR(200),
+	password VARCHAR(100) NOT NULL,
+      emailAddress VARCHAR(50) NOT NULL,
+      role VARCHAR(10) NOT NULL,
+	secQuestion VARCHAR(100) NOT NULL,
+      answer VARCHAR(100) NOT NULL,
+      CONSTRAINT PRIMARY KEY (userID)
+);
+
+CREATE TABLE Members(
+	memberId VARCHAR(6) NOT NULL,
+	name VARCHAR(20) NOT NULL,
+      DOB DATE,
+      address VARCHAR(50) NOT NULL,
+	contact VARCHAR(12) NOT NULL,      
+      membershipdate DATE,
+	userId VARCHAR(6) NOT NULL,
+      CONSTRAINT PRIMARY KEY (memberId),
+      CONSTRAINT FOREIGN KEY(userId) REFERENCES Users(userId)
+);
+CREATE TABLE Books(
+	bookId VARCHAR(6) NOT NULL,
+      title VARCHAR(50) NOT NULL,
+	categoryId VARCHAR(20)NOT NULL,
+      author VARCHAR(50)NOT NULL,
+      ISBN VARCHAR(20)NOT NULL,
+	copies INT NOT NULL,
+	CONSTRAINT PRIMARY KEY (bookId),
+      CONSTRAINT FOREIGN KEY(categoryId) REFERENCES Category(categoryId)
+
+);
+ CREATE TABLE Category(
+     categoryId VARCHAR(20)NOT NULL,
+     genre VARCHAR(50) NOT NULL,
+     description (100),
+     CONSTRAINT PRIMARY KEY (categoryId),
+);
+
+CREATE TABLE Borrowings (
+    borrowId VARCHAR(6) PRIMARY KEY,
+    borrowDate DATE,
+    memberId VARCHAR(6),
+    dueDate DATE,
+    FOREIGN KEY (memberId) REFERENCES Members(memberId)
+);
+CREATE TABLE Borrowetail(
+	borrowId VARCHAR(6) NOT NULL,
+	bookId VARCHAR(6) NOT NULL,
+      returnDate DATE,
+	bookCount INT NOT NULL,
+	fineAmount DECIMAL(10,2),
+	CONSTRAINT PRIMARY KEY (borrowId ,bookId ),
+	CONSTRAINT FOREIGN KEY (borrowId) REFERENCES Borrowings(borrowId) ,
+	CONSTRAINT FOREIGN KEY (bookId ) REFERENCES Books(bookId ) 
+);
+
+INSERT INTO Members VALUES('1','Hiruni','2002-03-23', ‘Tangalle’ ,'0712397199',' 2016-07-23', '1');
+INSERT INTO Members VALUES('2','Kaumadhi','2005-07-19', ‘ Kegalle’ ,'0754433321', ' 2022-03-28', '2');
+INSERT INTO Members VALUES('322','Minoko','2002-03-23', ‘ Negombo’ ,' 0777551009', ' 2022-03-19', '76');
+INSERT INTO Users VALUES ('1','Hiruni','Bangtan','hiruthrikawala@gmail.com', 'Member','What is your favourite colour','purple');
+ INSERT INTO Users VALUES ('2','Kaumadhi','Annyeong123!',' kawmadhithrikawala@gmail.com', 'Member','Which is your first pet','pepe'); 
+INSERT INTO Users VALUES ('3','Susil','Holms@126B',' susilabeywickrame@gmail.com', 'Staff','What was your favourite subject in school','History'); 
+INSERT INTO Users VALUES ('76','Minokosai','MynameisMinoko',' example@gmail.com', 'Member','What was your dream job as a child','Music Artist');  
+INSERT INTO Books VALUES('3','Diary of a wimpy kid-hard luck','5','Jeff Kinny','978-0141-3530','7');
+ INSERT INTO Books VALUES('1','Adventures of Sindbad','1','Gyula Krudy','81-297-0166-9','10');
+INSERT INTO Books VALUES('4','Famous Five-Five go off in a caravan','1','Enid Blyton','978-1-444-9366','10');
+INSERT INTO Books VALUES('2','The Hound of the Baskervilles','3','Arthur Conan Doyle','9780763630645','10');
+INSERT INTO Books VALUES('5','Valley of Fear','3','Arthur Conan Doyle','9781421808161','10');
+ INSERT INTO Category 
+VALUES('1','Adventure','Stories that revolve around exciting,daring, and perilious journeys .');
+INSERT  INTO Category VALUES('2','Fantasy','Magic and supernatural play a central role.');
+ INSERT INTO Category VALUES('3','Mystery','Mystery novels involve solving a puzzle or crime.');
+ INSERT  INTO Category VALUES('4','Fairy Tales','Fairy tales are timeless stories with magical elements.');
+ INSERT  INTO Category VALUES('5','Horror','Evokes a sense of awe and fear.');
+INSERT  INTO Category VALUES('6','Comedy','Books about funny events that are intended to make the reader laugh.')
+INSERT INTO Borrowings VALUES( '1','2024-06-21','1','2024-07-05');
+INSERT INTO Borrowings VALUES ('2','2024-06-05','2',' 2024-06-19');
+INSERT INTO Borrowings VALUES ('3','2024-07-20','322',' 2024-08-03');
+ INSERT INTO Borrowdetails VALUES ('1','1',Null,'1','0.00');
+INSERT INTO Borrowdetails VALUES ('1','2',Null,'1','0.00');
+INSERT INTO Borrowdetails VALUES ('1','4',Null,'1','0.00');
+INSERT INTO Borrowdetails VALUES ('2','1',Null,'1','0.00');
+INSERT INTO Borrowdetails VALUES ('3','3',Null,'1','0.00');
+
+
